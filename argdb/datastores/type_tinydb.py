@@ -95,4 +95,10 @@ def get_doc(db_name, doc_id):
         doc = Query()
         result = db.search(doc.metadata.core.id == doc_id)
         return result
-        
+
+def get_size(db_name):
+    """
+    """
+    db = get_datastore(db_name)
+    return db.__len__()
+
