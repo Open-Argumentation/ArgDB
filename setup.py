@@ -18,4 +18,5 @@ setup(
     author_email='mail@simonwells.org',
     version='0.1',
     packages=find_packages(exclude=('deploy', 'etc', 'examples'))
+    install_requires=['tinydb']
 )
