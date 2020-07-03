@@ -98,6 +98,11 @@ def get_doc(db_name, doc_id):
 
 def get_size(db_name):
     """
+    Retrieve the number of documents in the nominated datastore
+
+    This function is a requirement of the ArgDB plugin architecture
+
+    Return: An Integer
     """
     db = get_datastore(db_name)
     return db.__len__()
