@@ -1,0 +1,2 @@
+sadface=0.5
+tinydb==4.1.1
