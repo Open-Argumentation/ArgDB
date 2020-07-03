@@ -58,7 +58,15 @@ def add_datastore_config_entry(db_name, db_type):
     if db_name not in datastores:
         datastores.append(db_name)
         conf['datastores']['names'] = json.dumps(datastores)
-        conf[db_name] = {'type': db_type}
+        conf[db_name] = {}
+        conf[db_name]['type'] = db_type
+
+        print("DB_TYPE: "+str(db_type))
+        if 'couchdb' == db_type:
+            conf[db_name]['ip'] = '127.0.0.1'
+            conf[db_name]['port'] = '5984'
+            conf[db_name]['protocol'] = 'http'
+
         
         with open(config_pathname, 'w') as config_file:
             conf.write(config_file)
