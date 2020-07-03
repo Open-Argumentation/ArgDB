@@ -7,6 +7,7 @@ import sadface as sf
 from . import config
 from . import utils
 from . datastores import type_tinydb as tdb
+from . datastores import type_couchdb as cdb
 
 def add_datastore(db_name, db_type):
     """
@@ -19,6 +20,8 @@ def add_datastore(db_name, db_type):
     if config.add_datastore_config_entry(db_name, db_type):
         if db_type == "tinydb":
             return tdb.add_datastore(db_name)
+        elif db_type == "couchdb":
+            cdb.add_datastore(db_name)
         else:
             config.remove_datastore_config_entry(db_name)
 
@@ -35,7 +38,9 @@ def add_doc(db_name, doc):
         db = get_datastore(db_name)
         if db is not None:
             if "tinydb" == get_datastore_type(db_name):
-               tdb.add_doc(db_name, doc) 
+               tdb.add_doc(db_name, doc)
+            elif "couchdb" == get_datastore_type(db_name):
+                cdb.add_doc(db_name, doc)
     else:
         return result, problems
 
@@ -50,6 +55,8 @@ def clear_datastore(db_name):
     if db is not None:
         if "tinydb" == get_datastore_type(db_name):
             tdb.clear_datastore(db_name)
+        elif "couchdb" == get_datastore_type(db_name):
+            cdb.clear_datastore(db_name)
 
 def delete_datastore(db_name):
     """
@@ -62,6 +69,8 @@ def delete_datastore(db_name):
     if db is not None:
         if "tinydb" == get_datastore_type(db_name):
             tdb.delete_datastore(db_name)
+        elif "couchdb" == get_datastore_type(db_name):
+            cdb.delete_datastore(db_name)
         
         config.remove_datastore_config_entry(db_name)
        
@@ -78,6 +87,8 @@ def delete_doc(db_name, doc_id):
     if db is not None:
         if "tinydb" == get_datastore_type(db_name):
             tdb.delete_doc(db_name, doc_id)
+        elif "couchdb" == get_datastore_type(db_name):
+            cdb.delete_doc(db_name, doc_id)
 
 def get_datastore(db_name):
     """
@@ -91,6 +102,19 @@ def get_datastore(db_name):
     if db_name in get_datastores():
         if "tinydb" == get_datastore_type(db_name):
             return tdb.get_datastore(db_name)
+        elif "couchdb" == get_datastore_type(db_name):
+            return cdb.get_datastore(db_name)
+            
+def get_datastore_size(db_name):
+    """
+    """
+    db = get_datastore(db_name)
+    if db is not None:
+        if "tinydb" == get_datastore_type(db_name):
+            return tdb.get_size(db_name)
+        elif "couchdb" == get_datastore_type(db_name):
+            return cdb.get_size(db_name)
+    
 
 def get_datastore_type(db_name):
     """
@@ -120,6 +144,8 @@ def get_doc(db_name, doc_id):
     if db is not None:
         if "tinydb" == get_datastore_type(db_name):
             return tdb.get_doc(db_name, doc_id)
+        elif "couchdb" == get_datastore_type(db_name):
+            return cdb.get_doc(db_name, doc_id)
 
 def info():
     """
@@ -145,7 +171,7 @@ def info():
     for store in stores:
         data = {}
         data['Name'] = store
-        data['Num Docs'] = get_datastore(store).__len__()
+        data['Num Docs'] = get_datastore_size(store)
         info['Datastore Info'].append(data)
 
     return info
