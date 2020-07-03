@@ -48,7 +48,7 @@ def validate_type_tinydb():
     """
     from . datastores import type_tinydb
     
-    api = ['add_datastore','add_doc','clear_datastore','delete_datastore','delete_doc','get_datastore','get_doc']
+    api = ['add_datastore','add_doc','clear_datastore','delete_datastore','delete_doc','get_datastore','get_doc', 'get_size']
     fun_list = []
     for name, data in inspect.getmembers(type_tinydb, inspect.isfunction):
         if name.startswith('__'):
