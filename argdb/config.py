@@ -66,6 +66,8 @@ def add_datastore_config_entry(db_name, db_type):
             conf[db_name]['ip'] = '127.0.0.1'
             conf[db_name]['port'] = '5984'
             conf[db_name]['protocol'] = 'http'
+            conf[db_name]['username'] = 'admin'
+            conf[db_name]['password'] = 'password'
 
         
         with open(config_pathname, 'w') as config_file:
