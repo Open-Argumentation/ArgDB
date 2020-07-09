@@ -108,15 +108,7 @@ def get_doc(db_name, doc_id):
 
     Returns: A SADFace document
     """
-    url = get_datastore(db_name)
-    r = rq.get(url + doc_id)
-    doc = json.loads(r.text)
-    #if raw:
-    #    return doc
-    #else:
-    #    doc.pop("_id")
-    #    doc.pop("_rev")
-    #    return doc
+    doc = get_raw_doc(db_name, doc_id)
     doc.pop("_id")
     doc.pop("_rev")
     return doc
@@ -125,4 +117,27 @@ def get_size(db_name):
     """
     """
     return 666
-    
+
+
+
+####
+# CouchDB specific functions.
+#
+# The following are not part of the common ArgDB functions and thus are 
+# not necessarily available to all supported datastores. For that reason, 
+# use with caution.
+####
+
+def get_raw_doc(db_name, doc_id):
+    """
+    Get the SADFace document, identified by docid, from the named datastore
+
+    This function is a requirement of the ArgDB plugin architecture
+
+    Returns: A SADFace document
+    """
+    url = get_datastore(db_name)
+    r = rq.get(url + doc_id)
+    doc = json.loads(r.text)
+    return doc
+
