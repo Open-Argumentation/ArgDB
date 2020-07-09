@@ -5,6 +5,15 @@ from . import argdb
 import argparse
 import cmd
 
+def web():
+    """
+    Launch a pywebview and bottle powered web-based UI for ArgDB
+    """
+    import webview
+    webview.create_window('Hello world', 'https://pywebview.flowrl.com/hello')
+    webview.start()
+
+
 def main():
     parser = argparse.ArgumentParser(description="This is the ArgDB Python tool")
     parser.add_argument("-i", "--interactive", help="Use the ArgDB REPL (WARNING EXPERIMENTAL)", action="store_true")
@@ -13,7 +22,9 @@ def main():
     args = parser.parse_args()
 
     if args.web:
-        print("ArgDB Web UI")
+        print("Launching ArgDB Web UI...")
+        web()
+        
     elif args.interactive:
         print("ArgDB Interactive REPL")
     else:
