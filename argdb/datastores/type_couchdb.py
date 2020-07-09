@@ -125,7 +125,11 @@ def get_doc(db_name, doc_id):
 def get_size(db_name):
     """
     """
-    return 666
+    url = get_datastore(db_name)
+    response = rq.get(url)
+    db_info = json.loads(response.text)
+    num_docs = db_info.get("doc_count")
+    return num_docs
 
 
 
