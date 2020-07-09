@@ -118,6 +118,7 @@ def get_doc(db_name, doc_id):
     Returns: A SADFace document
     """
     doc = get_raw_doc(db_name, doc_id)
+    doc = json.loads(doc)
     doc.pop("_id")
     doc.pop("_rev")
     return doc
@@ -151,6 +152,9 @@ def get_raw_doc(db_name, doc_id):
     """
     url = get_datastore(db_name)
     r = rq.get(url + doc_id)
-    doc = json.loads(r.text)
-    return doc
+    return r.text#doc
+
+def update_doc(db_name, doc):
+    """
+    Update the document, identified by docid, in the datastore
 
