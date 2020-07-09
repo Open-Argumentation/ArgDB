@@ -25,12 +25,15 @@ def add_datastore(db_name):
 
 def add_doc(db_name, doc):
     """
-
+    Add the supplied document, identified by docid into the datastore
+    
     This function is a requirement of the ArgDB plugin architecture
 
     Returns: None
     """
-    pass
+    docid = sf.get_document_id(doc)
+    url = get_datastore(db_name)
+    r = rq.put(url + docid, data=json.dumps(doc))
 
 def clear_datastore(db_name):
     """
