@@ -3,7 +3,7 @@
 from . import argdb
 
 import argparse
-import cmd
+#import cmd
 
 def web():
     """
