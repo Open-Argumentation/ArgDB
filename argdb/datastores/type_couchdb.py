@@ -158,3 +158,25 @@ def update_doc(db_name, doc):
     """
     Update the document, identified by docid, in the datastore
 
+    Expects: Will accept a SADFace doc encoded either as a JSON string
+    or loaded into a Python dict
+
+    Returns: None
+    """
+    new = None
+    if type(doc) is str:
+        new = json.loads(doc)
+    elif type(doc) is dict:
+        new = doc
+
+    url = get_datastore(db_name)
+    doc_id = sf.get_document_id(new)
+    old = get_raw_doc(db_name, doc_id)
+    
+    old = json.loads(old)
+    rev = old.get("_rev")
+    new["_id"] = doc_id
+    new["_rev"] = rev
+
+    r = rq.put(url + doc_id, data=json.dumps(new))
+    
