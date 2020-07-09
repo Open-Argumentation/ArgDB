@@ -42,7 +42,12 @@ def clear_datastore(db_name):
 
     Returns: None
     """
-    pass
+
+    # Dirty Hack Warning!!!
+    # Could also do this using the bulk document API but it is easier
+    # to delete. 
+    delete_datastore(db_name)
+    add_datastore(db_name)
 
 def db_exists(db_name):
     """
