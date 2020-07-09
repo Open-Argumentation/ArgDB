@@ -60,7 +60,13 @@ def delete_datastore(db_name):
 
     Returns: None
     """
-    pass
+    url = get_datastore(db_name)
+    result = rq.delete(url)
+    if result.status_code == rq.codes.ok:
+        return True
+    else:
+        return False
+
 
 def delete_doc(db_name, doc_id):
     """
