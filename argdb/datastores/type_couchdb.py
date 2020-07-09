@@ -73,12 +73,16 @@ def delete_datastore(db_name):
 
 def delete_doc(db_name, doc_id):
     """
+    Delete the SADFace document, identified by docid, from the named datastore
 
     This function is a requirement of the ArgDB plugin architecture
 
     Returns: None
     """
-    pass
+    doc = get_raw_doc(db_name, doc_id)
+    rev = doc.get("_rev")
+    url = get_datastore(db_name)
+    r = rq.delete(url + doc_id + "?rev="+rev)
 
 
 def get_datastore(db_name):
