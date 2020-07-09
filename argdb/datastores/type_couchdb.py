@@ -102,12 +102,24 @@ def get_datastore(db_name):
 
 def get_doc(db_name, doc_id):
     """
+    Get the SADFace document, identified by docid, from the named datastore
 
     This function is a requirement of the ArgDB plugin architecture
 
     Returns: A SADFace document
     """
-    pass
+    url = get_datastore(db_name)
+    r = rq.get(url + doc_id)
+    doc = json.loads(r.text)
+    #if raw:
+    #    return doc
+    #else:
+    #    doc.pop("_id")
+    #    doc.pop("_rev")
+    #    return doc
+    doc.pop("_id")
+    doc.pop("_rev")
+    return doc
 
 def get_size(db_name):
     """
