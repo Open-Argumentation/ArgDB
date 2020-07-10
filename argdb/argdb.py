@@ -178,7 +178,7 @@ def init(config_pathname=None):
     print("Starting ArgDB...")
     if config_pathname is None:
         config.generate()
-        config_pathname = "argdb.cfg"
+        config_pathname = config.get_config_name()
 
     print("Loading configuration from file: "+str(config_pathname))
     current_config = config.load(config_pathname)

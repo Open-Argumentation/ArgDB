@@ -7,18 +7,20 @@ import os
 current = None
 config_pathname = None
 
-def generate():
+def generate(name='argdb.cfg'):
     """
     Create a new default configuration file called argdb.cfg
     """
     global config_pathname
-    config_pathname = 'argdb.cfg'
+    config_pathname = name
     
     if not os.path.exists(config_pathname):
         cp = ConfigParser()
         cp['argdb'] = {'ip': '127.0.0.1','port': '5984','protocol': 'http','username': 'admin','password': 'password'}
-        cp.write(open('argdb.cfg', 'w'))
-    
+        cp.write(open(config_pathname, 'w'))
+
+def get_config_name():
+    return config_pathname
 
 def load(pathname=None):
     """
