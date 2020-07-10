@@ -3,4 +3,3 @@ dominate==2.5.1
 pywebview==3.3.1
 requests==2.24.0
 sadface=0.5
-tinydb==4.1.1
