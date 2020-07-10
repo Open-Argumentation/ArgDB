@@ -44,6 +44,7 @@ def main():
 
     parser.add_argument("-d", "--datastore", help="Set the datastore to use")
     parser.add_argument("-s", "--sadface", help="Add the supplied SADface document to the current datastore")
+    parser.add_argument("--remove_document", help="Delete a document identifed by it's ID")
 
     args = parser.parse_args()
 

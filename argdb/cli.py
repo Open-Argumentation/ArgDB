@@ -40,8 +40,13 @@ def process(args):
         if args.datastore:
             print("Using the following datastore: " + args.datastore)
             if args.sadface:
-                print("adding a sadface document to: "+ args.datastore)
+                print("Adding a sadface document to: "+ args.datastore)
                 argdb.add_doc(args.datastore, args.sadface)
+            elif args.remove_document:
+                print("Deleting a sadface document from: "+ args.datastore)
+                argdb.delete_doc(args.datastore, args.remove_document)
+
+            
     else:
         print("You didn't supply a configuration file. If you don't have one then perhaps you want to generate one?")
    
