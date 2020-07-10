@@ -9,11 +9,8 @@ from . import config
 
 def add_datastore(db_name):
     """
-    Given a datastore name and type, create a new datastore &
-    add it to our configuration.
-
-    This is part of the public API for ArgDB & delegates to a
-    specific datastorage type (from the datastores sub-package)
+    Given a datastore name, create a new datastore &
+    add it to the config file.
     """
     print("adding datastore")
     config.add_datastore_config_entry(db_name)
@@ -28,10 +25,7 @@ def add_datastore(db_name):
 def add_doc(db_name, doc):
     """
     Given a nominated datastore and a SADFace document, verifies
-    the doc then adds it to the store
-
-    This is part of the public API for ArgDB & delegates to a
-    specific datastorage type (from the datastores sub-package)
+    the doc then adds it to the store. 
     """
     result, problems = sf.validation.verify(doc)
     if not result:
@@ -45,24 +39,18 @@ def add_doc(db_name, doc):
 
 def clear_datastore(db_name):
     """
-    Give an datastore name, removes it's contents. 
+    Given a datastore name, removes it's contents. 
 
     Dirty Hack Warning!!! 
     We could also do this using the CouchDB bulk document API but 
     it is easier to just delete and re-create the entire database.
-
-    This is part of the public API for ArgDB & delegates to a
-    specific datastorage type (from the datastores sub-package)
     """
     delete_datastore(db_name)
     add_datastore(db_name)
 
 def delete_datastore(db_name):
     """
-    Deletes the named datastore
-
-    This is part of the public API for ArgDB & delegates to a
-    specific datastorage type (from the datastores sub-package)
+    Deletes the named datastore.
     """
     config.remove_datastore_config_entry(db_name)
     url = get_datastore(db_name)
@@ -77,9 +65,6 @@ def delete_doc(db_name, doc_id):
     """
     Deletes the document, identified by the supplied ID, from
     the nominated datastore.
-
-    This is part of the public API for ArgDB & delegates to a
-    specific datastorage type (from the datastores sub-package)
     """
     doc = get_raw_doc(db_name, doc_id)
     doc = json.loads(doc)
@@ -89,7 +74,8 @@ def delete_doc(db_name, doc_id):
 
 def db_exists(db_name):
     """
-    Check whether a nominated DB exists
+    Check whether a nominated DB exists. By 'exists' we mean
+    that there is a CouchDB instance of the named datastore.
 
     Returns: True if the nominated DB exists, False otherwise
     """
@@ -103,10 +89,7 @@ def get_datastore(db_name):
     """
     Given a datastore name, return a handle to it.
 
-    This is part of the public API for ArgDB & delegates to a
-    specific datastorage type (from the datastores sub-package)
-
-    Returns a valid datastore or None
+    Returns the URL to the nominated CouchDB datastore or None
     """
     db_ip   = config.current.get(db_name, "ip")
     db_port = config.current.get(db_name, "port")
@@ -128,17 +111,6 @@ def get_doc(db_name, doc_id):
     """
     Retrieve a specific doc, identified by the supplied ID, from 
     the nominated datastore.
-
-    This is part of the public API for ArgDB & delegates to a
-    specific datastorage type (from the datastores sub-package)
-    """
-    """
-    db = get_datastore(db_name)
-    if db is not None:
-        if "tinydb" == get_datastore_type(db_name):
-            return tdb.get_doc(db_name, doc_id)
-        elif "couchdb" == get_datastore_type(db_name):
-            return cdb.get_doc(db_name, doc_id)
     """
     doc = get_raw_doc(db_name, doc_id)
     doc = json.loads(doc)
@@ -148,9 +120,7 @@ def get_doc(db_name, doc_id):
 
 def get_raw_doc(db_name, doc_id):
     """
-    Get the SADFace document, identified by docid, from the named datastore
-
-    This function is a requirement of the ArgDB plugin architecture
+    Get the SADFace document, identified by doc_id, from the named datastore
 
     Returns: A SADFace document
     """
@@ -160,6 +130,9 @@ def get_raw_doc(db_name, doc_id):
 
 def get_size(db_name):
     """
+    Get the number of documents in the named datastore.
+
+    Returns: The number of SADFace documents in the nominated datastore
     """
     url = get_datastore(db_name)
     response = rq.get(url)
