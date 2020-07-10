@@ -12,7 +12,6 @@ def add_datastore(db_name):
     Given a datastore name, create a new datastore &
     add it to the config file.
     """
-    print("adding datastore")
     config.add_datastore_config_entry(db_name)
     url = get_datastore(db_name)
     if not db_exists(url):
