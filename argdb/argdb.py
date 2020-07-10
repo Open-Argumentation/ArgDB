@@ -51,13 +51,14 @@ def delete_datastore(db_name):
     """
     Deletes the named datastore.
     """
-    config.remove_datastore_config_entry(db_name)
     url = get_datastore(db_name)
-    result = rq.delete(url)
-    if result.status_code == rq.codes.ok:
-        return True
-    else:
-        return False
+    if url is not None:
+        result = rq.delete(url)
+        if result.status_code == rq.codes.ok:
+            config.remove_datastore_config_entry(db_name)
+            return True
+        else:
+            return False
 
 
 def delete_doc(db_name, doc_id):
@@ -76,6 +77,9 @@ def db_exists(db_name):
     Check whether a nominated DB exists. By 'exists' we mean
     that there is a CouchDB instance of the named datastore.
 
+    Takes a fully qualified URL to the named DB on the CouchDB
+    server
+
     Returns: True if the nominated DB exists, False otherwise
     """
     r = rq.get(db_name)
@@ -90,15 +94,7 @@ def get_datastore(db_name):
 
     Returns the URL to the nominated CouchDB datastore or None
     """
-    db_ip   = config.current.get(db_name, "ip")
-    db_port = config.current.get(db_name, "port")
-    db_protocol = config.current.get(db_name, "protocol")
-    db_username = config.current.get(db_name, "username")
-    db_password = config.current.get(db_name, "password")
-
-    url = db_protocol + "://" + db_username + ":" + db_password \
-        + "@" + db_ip + ":" + db_port + "/" + db_name + "/"
-    return url
+    return config.get_url_from_config(db_name)
 
 def get_datastores():
     """
