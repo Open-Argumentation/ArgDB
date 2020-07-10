@@ -2,6 +2,7 @@
 
 from . import argdb
 from . import webui
+from . import cli
 
 import argparse
 import cmd
@@ -27,20 +28,14 @@ class Shell(cmd.Cmd):
     
     do_q = do_quit
 
-
-def cli(args):
-    """
-    Process arguments passed in from the command linke
-    """
-    pass
-
-
 def main():
     parser = argparse.ArgumentParser(description="This is the ArgDB Python tool")
     parser.add_argument("-i", "--interactive", help="Use the ArgDB REPL (WARNING EXPERIMENTAL)", 
         action="store_true")
     parser.add_argument("-w", "--web", help="Launch the Web UI  (WARNING EXPERIMENTAL)", 
         action="store_true")
+
+    parser.add_argument("-c", "--config", help="Specift a configuration file")
 
     args = parser.parse_args()
 
@@ -54,6 +49,6 @@ def main():
 
     else:
         print("ArgDB CLI UI")
-        cli(args)
+        cli.process(args)
         
         
