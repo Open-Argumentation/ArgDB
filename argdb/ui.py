@@ -39,6 +39,9 @@ def main():
     parser.add_argument("-g", "--generate", help="Generate a default configuration file",
         action="store_true")
 
+    parser.add_argument("-d", "--datastore", help="Add a new named datastore")
+    parser.add_argument("-dd", "--removedatastore", help="Delete a named datastore")
+
     args = parser.parse_args()
 
     if args.web:
