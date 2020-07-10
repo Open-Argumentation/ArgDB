@@ -1,12 +1,10 @@
 #!/usr/bin/python
 
 from . import argdb
+from . import webui
 
 import argparse
 import cmd
-from bottle import route, run, template
-import webview
-import threading
 
 class Shell(cmd.Cmd):
     """
@@ -36,22 +34,6 @@ def cli(args):
     """
     pass
 
-@route('/')
-def root():
-    return template('<b>Hello {{name}}</b>!', name='Simon')
-    
-def web():
-    """
-    Launch a pywebview and bottle powered web-based UI for ArgDB
-    """
-   
-    thread = threading.Thread(target=run, kwargs=dict(host='localhost', port=8080))
-    thread.daemon = True
-    thread.start()
-
-    webview.create_window("ArgDB", "http://localhost:8080", width=800, height=600, resizable=False)
-    webview.start()
-    
 
 def main():
     parser = argparse.ArgumentParser(description="This is the ArgDB Python tool")
@@ -64,7 +46,7 @@ def main():
 
     if args.web:
         print("Launching ArgDB Web UI...")
-        web()
+        webui.launch()
         
     elif args.interactive:
         print("ArgDB Interactive REPL")
