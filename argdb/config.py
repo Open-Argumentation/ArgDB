@@ -18,8 +18,8 @@ def generate():
     
     if not os.path.exists(config_pathname):
         cp = ConfigParser()
-        cp['datastores'] = {'names':['default'],'types':['tinydb', 'couchdb'] }
-        cp['default'] = {'type': 'tinydb'}
+        cp['datastores'] = {'names':['default']}
+        cp['default'] = {'ip': '127.0.0.1','port': '5984','protocol': 'http','username': 'admin','password': 'password'}
         cp.write(open('default.cfg', 'w'))
     
 
@@ -41,7 +41,7 @@ def load(pathname=None):
         raise Exception("Tried to load config file but pathname (location) was set to None")
         exit(1)
 
-def add_datastore_config_entry(db_name, db_type):
+def add_datastore_config_entry(db_name):
     """
     Add a new datastore entry to the in memory config & persist changes to disk
 
@@ -59,17 +59,12 @@ def add_datastore_config_entry(db_name, db_type):
         datastores.append(db_name)
         conf['datastores']['names'] = json.dumps(datastores)
         conf[db_name] = {}
-        conf[db_name]['type'] = db_type
+        conf[db_name]['ip'] = '127.0.0.1'
+        conf[db_name]['port'] = '5984'
+        conf[db_name]['protocol'] = 'http'
+        conf[db_name]['username'] = 'admin'
+        conf[db_name]['password'] = 'password'
 
-        print("DB_TYPE: "+str(db_type))
-        if 'couchdb' == db_type:
-            conf[db_name]['ip'] = '127.0.0.1'
-            conf[db_name]['port'] = '5984'
-            conf[db_name]['protocol'] = 'http'
-            conf[db_name]['username'] = 'admin'
-            conf[db_name]['password'] = 'password'
-
-        
         with open(config_pathname, 'w') as config_file:
             conf.write(config_file)
 
