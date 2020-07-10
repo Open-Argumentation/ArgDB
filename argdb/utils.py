@@ -15,27 +15,7 @@ def rectify(input_string):
 
     Returns: a python object
     """
-    return json.loads(str(input_string).replace("'", '"'))
-
-def validate_datastore_api():
-    """
-    Determines whether a datastore type implements our data storage API.
-
-    Checks the source of each datastore descriptions in argdb.datastores
-    for the presence of the following functions:
-        add_datastore 
-        add_doc
-        clear_datastore 
-        delete_datastore 
-        delete_doc 
-        get_datastore 
-        get_doc 
-    """
-    result = {}
-    result['tinydb'] = validate_type_tinydb()
-
-    return result
-    
+    return json.loads(str(input_string).replace("'", '"'))    
 
 def validate_type_tinydb():
     """
