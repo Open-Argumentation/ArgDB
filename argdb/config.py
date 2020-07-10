@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from configparser import ConfigParser
+from configparser import ConfigParser, NoSectionError
 import json
 import os
 
@@ -21,6 +21,24 @@ def generate_default(name='argdb.cfg'):
 
 def get_config_name():
     return config_pathname
+
+def get_url_from_config(db_name):
+    """
+    Construct & return the URL for a given datastore from the
+    associated config entry
+    """
+    try:
+        db_ip   = current.get(db_name, "ip")
+        db_port = current.get(db_name, "port")
+        db_protocol = current.get(db_name, "protocol")
+        db_username = current.get(db_name, "username")
+        db_password = current.get(db_name, "password")
+
+        url = db_protocol + "://" + db_username + ":" + db_password \
+            + "@" + db_ip + ":" + db_port + "/" + db_name + "/"
+        return url
+    except NoSectionError:
+        return None
 
 def load(pathname=None):
     """
