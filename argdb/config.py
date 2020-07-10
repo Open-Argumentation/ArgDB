@@ -18,7 +18,6 @@ def generate():
     
     if not os.path.exists(config_pathname):
         cp = ConfigParser()
-        cp['DEFAULT'] = {}
         cp['default'] = {'ip': '127.0.0.1','port': '5984','protocol': 'http','username': 'admin','password': 'password'}
         cp.write(open('argdb.cfg', 'w'))
     
