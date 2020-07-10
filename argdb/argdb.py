@@ -1,15 +1,14 @@
 #!/usr/bin/python
 
 import json
+import requests as rq
 
 import sadface as sf
 
 from . import config
 from . import utils
-from . datastores import type_tinydb as tdb
-from . datastores import type_couchdb as cdb
 
-def add_datastore(db_name, db_type):
+def add_datastore(db_name):
     """
     Given a datastore name and type, create a new datastore &
     add it to our configuration.
@@ -17,13 +16,15 @@ def add_datastore(db_name, db_type):
     This is part of the public API for ArgDB & delegates to a
     specific datastorage type (from the datastores sub-package)
     """
-    if config.add_datastore_config_entry(db_name, db_type):
-        if db_type == "tinydb":
-            return tdb.add_datastore(db_name)
-        elif db_type == "couchdb":
-            cdb.add_datastore(db_name)
-        else:
-            config.remove_datastore_config_entry(db_name)
+    print("adding datastore")
+    config.add_datastore_config_entry(db_name)
+    url = get_datastore(db_name)
+    if not db_exists(url):
+        try:
+            r = rq.put(url)
+            r.raise_for_status()         
+        except rq.exceptions.HTTPError as e:
+            print(e)
 
 def add_doc(db_name, doc):
     """
@@ -35,28 +36,27 @@ def add_doc(db_name, doc):
     """
     result, problems = sf.validation.verify(doc)
     if not result:
-        db = get_datastore(db_name)
-        if db is not None:
-            if "tinydb" == get_datastore_type(db_name):
-               tdb.add_doc(db_name, doc)
-            elif "couchdb" == get_datastore_type(db_name):
-                cdb.add_doc(db_name, doc)
+        docid = sf.get_document_id(doc)
+        print("docid="+str(docid))
+        url = get_datastore(db_name)
+        print("url="+str(url))
+        r = rq.put(url + docid, data=json.dumps(doc))
     else:
         return result, problems
 
 def clear_datastore(db_name):
     """
-    Give an datastore name, removes it's contents
+    Give an datastore name, removes it's contents. 
+
+    Dirty Hack Warning!!! 
+    We could also do this using the CouchDB bulk document API but 
+    it is easier to just delete and re-create the entire database.
 
     This is part of the public API for ArgDB & delegates to a
     specific datastorage type (from the datastores sub-package)
     """
-    db = get_datastore(db_name)
-    if db is not None:
-        if "tinydb" == get_datastore_type(db_name):
-            tdb.clear_datastore(db_name)
-        elif "couchdb" == get_datastore_type(db_name):
-            cdb.clear_datastore(db_name)
+    delete_datastore(db_name)
+    add_datastore(db_name)
 
 def delete_datastore(db_name):
     """
@@ -64,16 +64,14 @@ def delete_datastore(db_name):
 
     This is part of the public API for ArgDB & delegates to a
     specific datastorage type (from the datastores sub-package)
-    """    
-    db = get_datastore(db_name)
-    if db is not None:
-        if "tinydb" == get_datastore_type(db_name):
-            tdb.delete_datastore(db_name)
-        elif "couchdb" == get_datastore_type(db_name):
-            cdb.delete_datastore(db_name)
-        
-        config.remove_datastore_config_entry(db_name)
-       
+    """ 
+    url = get_datastore(db_name)
+    result = rq.delete(url)
+    if result.status_code == rq.codes.ok:
+        return True
+    else:
+        return False
+
 
 def delete_doc(db_name, doc_id):
     """
@@ -83,12 +81,23 @@ def delete_doc(db_name, doc_id):
     This is part of the public API for ArgDB & delegates to a
     specific datastorage type (from the datastores sub-package)
     """
-    db = get_datastore(db_name)
-    if db is not None:
-        if "tinydb" == get_datastore_type(db_name):
-            tdb.delete_doc(db_name, doc_id)
-        elif "couchdb" == get_datastore_type(db_name):
-            cdb.delete_doc(db_name, doc_id)
+    doc = get_raw_doc(db_name, doc_id)
+    doc = json.loads(doc)
+    rev = doc.get("_rev")
+    url = get_datastore(db_name)
+    r = rq.delete(url + doc_id + "?rev="+rev)
+
+def db_exists(db_name):
+    """
+    Check whether a nominated DB exists
+
+    Returns: True if the nominated DB exists, False otherwise
+    """
+    r = rq.get(db_name)
+    if r.status_code == rq.codes.ok:
+        return True
+    else:
+        return False
 
 def get_datastore(db_name):
     """
@@ -99,32 +108,15 @@ def get_datastore(db_name):
 
     Returns a valid datastore or None
     """
-    if db_name in get_datastores():
-        if "tinydb" == get_datastore_type(db_name):
-            return tdb.get_datastore(db_name)
-        elif "couchdb" == get_datastore_type(db_name):
-            return cdb.get_datastore(db_name)
-            
-def get_datastore_size(db_name):
-    """
-    """
-    db = get_datastore(db_name)
-    if db is not None:
-        if "tinydb" == get_datastore_type(db_name):
-            return tdb.get_size(db_name)
-        elif "couchdb" == get_datastore_type(db_name):
-            return cdb.get_size(db_name)
-    
+    db_ip   = config.current.get(db_name, "ip")
+    db_port = config.current.get(db_name, "port")
+    db_protocol = config.current.get(db_name, "protocol")
+    db_username = config.current.get(db_name, "username")
+    db_password = config.current.get(db_name, "password")
 
-def get_datastore_type(db_name):
-    """
-    Given a datastore name, returns the type of the datastore
-    where that is recorded in the configuration file
-
-    Note that suppoted types are defined wholly by entries in
-    the datastores sub-package
-    """
-    return config.current.get(db_name, "type")
+    url = db_protocol + "://" + db_username + ":" + db_password \
+        + "@" + db_ip + ":" + db_port + "/" + db_name + "/"
+    return url
 
 def get_datastores():
     """
@@ -140,12 +132,40 @@ def get_doc(db_name, doc_id):
     This is part of the public API for ArgDB & delegates to a
     specific datastorage type (from the datastores sub-package)
     """
+    """
     db = get_datastore(db_name)
     if db is not None:
         if "tinydb" == get_datastore_type(db_name):
             return tdb.get_doc(db_name, doc_id)
         elif "couchdb" == get_datastore_type(db_name):
             return cdb.get_doc(db_name, doc_id)
+    """
+    doc = get_raw_doc(db_name, doc_id)
+    doc = json.loads(doc)
+    doc.pop("_id")
+    doc.pop("_rev")
+    return doc
+
+def get_raw_doc(db_name, doc_id):
+    """
+    Get the SADFace document, identified by docid, from the named datastore
+
+    This function is a requirement of the ArgDB plugin architecture
+
+    Returns: A SADFace document
+    """
+    url = get_datastore(db_name)
+    r = rq.get(url + doc_id)
+    return r.text
+
+def get_size(db_name):
+    """
+    """
+    url = get_datastore(db_name)
+    response = rq.get(url)
+    db_info = json.loads(response.text)
+    num_docs = db_info.get("doc_count")
+    return num_docs
 
 def info():
     """
@@ -171,7 +191,7 @@ def info():
     for store in stores:
         data = {}
         data['Name'] = store
-        data['Num Docs'] = get_datastore_size(store)
+        data['Num Docs'] = get_size(store)
         info['Datastore Info'].append(data)
 
     return info
@@ -191,12 +211,38 @@ def init(config_pathname=None):
     current_config = config.load(config_pathname)
     
     if current_config is not None:
-        datastore_types = current_config.get('datastores','types')
+        print("Loaded configuration successfully")
         datastore_list = current_config.get('datastores','names')
-        print("This ArgDB instance supports the following datastore types: "+str(datastore_types))
         print("This ArgDB instance has the following datastores defined: "+str(datastore_list))
 
 def search(db_name, query):
     """
     """
     pass
+
+def update_doc(db_name, doc):
+    """
+    Update the document, identified by docid, in the datastore
+
+    Expects: Will accept a SADFace doc encoded either as a JSON string
+    or loaded into a Python dict
+
+    Returns: None
+    """
+    new = None
+    if type(doc) is str:
+        new = json.loads(doc)
+    elif type(doc) is dict:
+        new = doc
+
+    url = get_datastore(db_name)
+    doc_id = sf.get_document_id(new)
+    old = get_raw_doc(db_name, doc_id)
+    
+    old = json.loads(old)
+    rev = old.get("_rev")
+    new["_id"] = doc_id
+    new["_rev"] = rev
+
+    r = rq.put(url + doc_id, data=json.dumps(new))
+    
