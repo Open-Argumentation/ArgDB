@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import argparse
+import sadface
 
 from . import argdb
 from . import config
@@ -39,12 +40,16 @@ def process(args):
 
         if args.datastore:
             print("Using the following datastore: " + args.datastore)
-            if args.sadface:
+            if args.add_document:
                 print("Adding a sadface document to: "+ args.datastore)
-                argdb.add_doc(args.datastore, args.sadface)
+                argdb.add_doc(args.datastore, args.add_document)
             elif args.remove_document:
                 print("Deleting a sadface document from: "+ args.datastore)
                 argdb.delete_doc(args.datastore, args.remove_document)
+            elif args.get_document:
+                doc = argdb.get_doc(args.datastore, args.get_document)
+                print(sadface.prettyprint(doc))
+                
 
             
     else:
