@@ -187,7 +187,7 @@ def info():
     stores = get_datastores()
 
     info["Num Datastores"] = str(len(stores))
-    info['Datastore List'] = str(config.current.get('DEFAULT','names'))
+    info['Datastore List'] = stores
     info['Datastore Info'] = []
     for store in stores:
         data = {}
@@ -213,7 +213,7 @@ def init(config_pathname=None):
     
     if current_config is not None:
         print("Loaded configuration successfully")
-        datastore_list = current_config.get('DEFAULT','names')
+        datastore_list = get_datastores()
         print("This ArgDB instance has the following datastores defined: "+str(datastore_list))
 
 def search(db_name, query):
