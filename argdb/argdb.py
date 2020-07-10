@@ -71,10 +71,12 @@ def delete_doc(db_name, doc_id):
     the nominated datastore.
     """
     doc = get_raw_doc(db_name, doc_id)
-    doc = json.loads(doc)
-    rev = doc.get("_rev")
-    url = get_datastore(db_name)
-    r = rq.delete(url + doc_id + "?rev="+rev)
+    
+    if doc is not None:
+        doc = json.loads(doc)
+        rev = doc.get("_rev")
+        url = get_datastore(db_name)
+        r = rq.delete(url + doc_id + "?rev="+rev)
 
 def db_exists(db_name):
     """
@@ -112,10 +114,11 @@ def get_doc(db_name, doc_id):
     the nominated datastore.
     """
     doc = get_raw_doc(db_name, doc_id)
-    doc = json.loads(doc)
-    doc.pop("_id")
-    doc.pop("_rev")
-    return doc
+    if doc is not None:
+        doc = json.loads(doc)
+        doc.pop("_id")
+        doc.pop("_rev")
+        return doc
 
 def get_raw_doc(db_name, doc_id):
     """
@@ -125,7 +128,8 @@ def get_raw_doc(db_name, doc_id):
     """
     url = get_datastore(db_name)
     r = rq.get(url + doc_id)
-    return r.text
+    if r.status_code == 200:
+        return r.text
 
 def get_size(db_name):
     """
