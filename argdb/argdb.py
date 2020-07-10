@@ -123,7 +123,7 @@ def get_datastores():
     """
     Retrieve a list of all extant datastores
     """
-    return utils.rectify(config.current.get('datastores','names'))
+    return config.current.sections()
 
 def get_doc(db_name, doc_id):
     """
@@ -184,10 +184,10 @@ def info():
     Returns a dict describing ArgDB contents
     """
     info = {}
-    stores = utils.rectify(config.current.get('datastores','names'))
+    stores = get_datastores()
 
     info["Num Datastores"] = str(len(stores))
-    info['Datastore List'] = str(config.current.get('datastores','names'))
+    info['Datastore List'] = str(config.current.get('DEFAULT','names'))
     info['Datastore Info'] = []
     for store in stores:
         data = {}
@@ -213,7 +213,7 @@ def init(config_pathname=None):
     
     if current_config is not None:
         print("Loaded configuration successfully")
-        datastore_list = current_config.get('datastores','names')
+        datastore_list = current_config.get('DEFAULT','names')
         print("This ArgDB instance has the following datastores defined: "+str(datastore_list))
 
 def search(db_name, query):
