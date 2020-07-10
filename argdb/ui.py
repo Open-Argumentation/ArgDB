@@ -35,7 +35,9 @@ def main():
     parser.add_argument("-w", "--web", help="Launch the Web UI  (WARNING EXPERIMENTAL)", 
         action="store_true")
 
-    parser.add_argument("-c", "--config", help="Specift a configuration file")
+    parser.add_argument("-c", "--config", help="Specify a configuration file")
+    parser.add_argument("-g", "--generate", help="Generate a default configuration file",
+        action="store_true")
 
     args = parser.parse_args()
 
