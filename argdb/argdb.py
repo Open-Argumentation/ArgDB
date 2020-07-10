@@ -175,9 +175,9 @@ def info():
 
     {
         'Num Datastores': '1', 
-        'Datastore List': '["default"]', 
+        'Datastore List': '["argdb"]', 
         'Datastore Info': [
-            {'Name': 'default', 'Num Docs': 4}
+            {'Name': 'argdb', 'Num Docs': 4}
         ]
     }
 
