@@ -36,7 +36,7 @@ def main():
         action="store_true")
 
     parser.add_argument("-c", "--config", help="Specify a configuration file")
-    parser.add_argument("-g", "--generate", help="Generate a default configuration file",
+    parser.add_argument("--generate", help="Generate a default configuration file",
         action="store_true")
 
     parser.add_argument("--add_datastore", help="Add a new named datastore")
