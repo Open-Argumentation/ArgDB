@@ -7,7 +7,7 @@ import os
 current = None
 config_pathname = None
 
-def generate(name='argdb.cfg'):
+def generate_default(name='argdb.cfg'):
     """
     Create a new default configuration file called argdb.cfg
     """
