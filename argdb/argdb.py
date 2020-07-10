@@ -23,16 +23,20 @@ def add_datastore(db_name):
 
 def add_doc(db_name, doc):
     """
-    Given a nominated datastore and a SADFace document, verifies
-    the doc then adds it to the store. 
+    Given a nominated datastore and a SADFace document (String or Python
+    dict), verifies the doc then adds it to the specified datastore. 
     """
-    result, problems = sf.validation.verify(doc)
+    newdoc = None
+    if type(doc) is str:
+        newdoc = json.loads(doc)
+    elif type(doc) is dict:
+        newdoc = doc
+    
+    result, problems = sf.validation.verify(newdoc)
     if not result:
-        docid = sf.get_document_id(doc)
-        print("docid="+str(docid))
+        docid = sf.get_document_id(newdoc)
         url = get_datastore(db_name)
-        print("url="+str(url))
-        r = rq.put(url + docid, data=json.dumps(doc))
+        r = rq.put(url + docid, data=json.dumps(newdoc))
     else:
         return result, problems
 
