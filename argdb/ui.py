@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from . import argdb
-from . import webui
+from . import gui
 from . import cli
 
 import argparse
@@ -32,7 +32,7 @@ def main():
     parser = argparse.ArgumentParser(description="This is the ArgDB Python tool")
     parser.add_argument("-i", "--interactive", help="Use the ArgDB REPL (WARNING EXPERIMENTAL)", 
         action="store_true")
-    parser.add_argument("-w", "--web", help="Launch the Web UI  (WARNING EXPERIMENTAL)", 
+    parser.add_argument("--gui", help="Launch the WebView GUI  (WARNING EXPERIMENTAL)", 
         action="store_true")
 
     parser.add_argument("-c", "--config", help="Specify a configuration file")
@@ -49,9 +49,9 @@ def main():
 
     args = parser.parse_args()
 
-    if args.web:
-        print("Launching ArgDB Web UI...")
-        webui.launch()
+    if args.gui:
+        print("Launching ArgDB WebView GUI...")
+        gui.launch()
         
     elif args.interactive:
         print("ArgDB Interactive REPL")
