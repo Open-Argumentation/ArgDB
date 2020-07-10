@@ -48,7 +48,6 @@ def main():
         Shell().cmdloop()
 
     else:
-        print("ArgDB CLI UI")
         cli.process(args)
         
         
