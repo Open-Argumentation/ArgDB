@@ -18,7 +18,7 @@ def generate():
     
     if not os.path.exists(config_pathname):
         cp = ConfigParser()
-        cp['DEFAULT'] = {'names':['default']}
+        cp['DEFAULT'] = {}
         cp['default'] = {'ip': '127.0.0.1','port': '5984','protocol': 'http','username': 'admin','password': 'password'}
         cp.write(open('default.cfg', 'w'))
     
@@ -57,7 +57,6 @@ def add_datastore_config_entry(db_name):
     
     if db_name not in datastores:
         datastores.append(db_name)
-        conf['DEFAULT']['names'] = json.dumps(datastores)
         conf[db_name] = {}
         conf[db_name]['ip'] = '127.0.0.1'
         conf[db_name]['port'] = '5984'
@@ -81,7 +80,6 @@ def remove_datastore_config_entry(db_name):
     datastores = current.sections()
     if db_name in datastores:
         datastores.remove(db_name)
-        conf['DEFAULT']['names'] = json.dumps(datastores)
         conf.remove_section(db_name)
 
         with open(config_pathname, 'w') as cfile:
