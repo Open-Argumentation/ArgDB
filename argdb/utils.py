@@ -16,37 +16,4 @@ def rectify(input_string):
     Returns: a python object
     """
     return json.loads(str(input_string).replace("'", '"'))    
-
-def validate_type_tinydb():
-    """
-    Validates the tinydb API from the datastores sub-package
-
-    Returns a pair (l, r) in which the left object shows the required 
-    api functions not present in the datastore descriptor and the right
-    side shows the functions in the datastore descriptor that aren't 
-    defined in the API. Returns True for l or r if there is no difference
-    """
-    from . datastores import type_tinydb
-    
-    api = ['add_datastore','add_doc','clear_datastore','delete_datastore','delete_doc','get_datastore','get_doc', 'get_size']
-    fun_list = []
-    for name, data in inspect.getmembers(type_tinydb, inspect.isfunction):
-        if name.startswith('__'):
-            continue
-        else:
-            fun_list.append(name)
-
-    if set(api) == set(fun_list):
-        return True
-    else:
-        diff_l = set(api).difference(fun_list)
-        if len(diff_l) == 0:
-            diff_l = True
-        diff_r = set(fun_list).difference(api)
-        if len(diff_r) == 0:
-            diff_r = True
-
-        return diff_l, diff_r
-
-
         
