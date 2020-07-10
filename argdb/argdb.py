@@ -64,7 +64,8 @@ def delete_datastore(db_name):
 
     This is part of the public API for ArgDB & delegates to a
     specific datastorage type (from the datastores sub-package)
-    """ 
+    """
+    config.remove_datastore_config_entry(db_name)
     url = get_datastore(db_name)
     result = rq.delete(url)
     if result.status_code == rq.codes.ok:
