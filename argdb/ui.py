@@ -39,8 +39,11 @@ def main():
     parser.add_argument("-g", "--generate", help="Generate a default configuration file",
         action="store_true")
 
-    parser.add_argument("-d", "--datastore", help="Add a new named datastore")
-    parser.add_argument("-dd", "--removedatastore", help="Delete a named datastore")
+    parser.add_argument("--add_datastore", help="Add a new named datastore")
+    parser.add_argument("--remove_datastore", help="Delete a named datastore")
+
+    parser.add_argument("-d", "--datastore", help="Set the datastore to use")
+    parser.add_argument("-s", "--sadface", help="Add the supplied SADface document to the current datastore")
 
     args = parser.parse_args()
 
