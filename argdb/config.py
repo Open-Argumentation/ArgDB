@@ -4,8 +4,6 @@ from configparser import ConfigParser
 import json
 import os
 
-from . import utils
-
 current = None
 config_pathname = None
 

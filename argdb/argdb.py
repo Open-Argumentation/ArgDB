@@ -6,7 +6,6 @@ import requests as rq
 import sadface as sf
 
 from . import config
-from . import utils
 
 def add_datastore(db_name):
     """
