@@ -17,6 +17,6 @@ setup(
     url='https://github.com/Open-Argumentation/ArgDB',
     author_email='mail@simonwells.org',
     version='0.1',
-    packages=find_packages(exclude=('deploy', 'etc', 'examples'))
+    packages=find_packages(exclude=('deploy', 'etc', 'examples')),
     install_requires=['tinydb']
 )
