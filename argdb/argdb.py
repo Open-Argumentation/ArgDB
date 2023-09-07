@@ -19,10 +19,3 @@ def init(config_pathname=None):
 
     current_config = config.load(config_pathname)
     
-
-def get_datastores():
-    """
-    Retrieve a list of all extant datastores
-    """
-    return config.current.sections()
-

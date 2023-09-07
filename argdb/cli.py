@@ -20,8 +20,6 @@ def process(args):
     if args.config:
         print("Starting ArgDB...\n")
         argdb.init(args.config)
-        
-        print("This ArgDB instance has the following datastores defined: \n"+str(argdb.get_datastores())+"\n")
 
 
         """
