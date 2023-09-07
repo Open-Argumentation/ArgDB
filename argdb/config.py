@@ -16,6 +16,7 @@ def generate_default(name='argdb.cfg'):
     
     if not os.path.exists(config_pathname):
         cp = ConfigParser()
+        cp['datastore'] = {'name':'argdb', 'path':'.'}
         cp['gui'] = {'port':'8080'}
         cp['api'] = {'port':'5000'}
         cp.write(open(config_pathname, 'w'))
