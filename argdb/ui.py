@@ -31,10 +31,9 @@ class Shell(cmd.Cmd):
 
 def main():
     parser = argparse.ArgumentParser(description="This is the ArgDB Python tool")
-    parser.add_argument("-i", "--interactive", help="Use the ArgDB REPL (WARNING EXPERIMENTAL)", 
-        action="store_true")
-    parser.add_argument("--gui", help="Launch the WebView GUI  (WARNING EXPERIMENTAL)", 
-        action="store_true")
+
+    parser.add_argument("-i", "--interactive", help="Use the ArgDB REPL (WARNING EXPERIMENTAL)", action="store_true")
+    parser.add_argument("--gui", help="Launch the WebView GUI  (WARNING EXPERIMENTAL)", action="store_true")
     
     parser.add_argument("-c", "--config", help="Specify a configuration file")
     parser.add_argument("--generate", help="Generate a default configuration file", action="store_true")
