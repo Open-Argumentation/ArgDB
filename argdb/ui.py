@@ -50,7 +50,7 @@ def main():
 
     if args.gui:
         print("Launching ArgDB WebView GUI...")
-        gui.launch()
+        gui.launch(args)
         
     elif args.interactive:
         print("ArgDB Interactive REPL")

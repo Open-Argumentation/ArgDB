@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from . import argdb
+from . import config
 
 from bottle import route, run, template
 import webview
@@ -10,12 +11,15 @@ import threading
 def root():
     return template('<b>Hello {{name}}</b>!', name='Simon')
     
-def launch():
+def launch(args):
     """
     Launch a pywebview and bottle powered web-based UI for ArgDB
     """
+
+    argdb.init(args.config)
    
-    thread = threading.Thread(target=run, kwargs=dict(host='localhost', port=8080))
+    portnum = config.current.get('gui', "port")
+    thread = threading.Thread(target=run, kwargs=dict(host='localhost', port=portnum))
     thread.daemon = True
     thread.start()
 
