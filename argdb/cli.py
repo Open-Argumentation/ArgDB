@@ -17,13 +17,12 @@ def process(args):
         config.generate_default()
         exit(1)
 
+
     if args.config:
         print("Starting ArgDB...")
         argdb.init(args.config)
-        
         print("This ArgDB instance has the following datastores defined: \n"+str(argdb.get_datastores()))
-#        print(argdb.info())
-#        print()
+
         """
         if args.add_datastore:
             print("Adding the following datastore: "+str(args.add_datastore))
