@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import argparse
+import json
 
 from . import argdb
 from . import config
@@ -10,8 +11,6 @@ def process(args):
     """
     Process arguments passed in from the command linke
     """
-    print("ArgDB Command Line UI")
-    print()
     if args.generate:
         print("Generating a configuration file for you...")
         config.generate_default()
@@ -19,9 +18,13 @@ def process(args):
 
 
     if args.config:
-        print("Starting ArgDB...")
+        print("Starting ArgDB...\n")
         argdb.init(args.config)
-        print("This ArgDB instance has the following datastores defined: \n"+str(argdb.get_datastores()))
+        
+        print("This ArgDB instance has the following datastores defined: \n"+str(argdb.get_datastores())+"\n")
+
+        if args.info:
+            print("Further information about this ArgDB instance: \n" +str(json.dumps(argdb.info(), indent=4, sort_keys=True))+"\n")
 
         """
         if args.add_datastore:
