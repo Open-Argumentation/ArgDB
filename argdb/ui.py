@@ -37,7 +37,6 @@ def main():
     
     parser.add_argument("-c", "--config", help="Specify a configuration file")
     parser.add_argument("--generate", help="Generate a default configuration file", action="store_true")
-    parser.add_argument("--info", help="Retrieve information about this ArgDB", action="store_true")
 
 #    parser.add_argument("--add_datastore", help="Add a new named datastore")
 #    parser.add_argument("--remove_datastore", help="Delete a named datastore")

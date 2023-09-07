@@ -23,8 +23,6 @@ def process(args):
         
         print("This ArgDB instance has the following datastores defined: \n"+str(argdb.get_datastores())+"\n")
 
-        if args.info:
-            print("Further information about this ArgDB instance: \n" +str(json.dumps(argdb.info(), indent=4, sort_keys=True))+"\n")
 
         """
         if args.add_datastore:
