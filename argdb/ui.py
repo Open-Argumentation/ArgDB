@@ -48,6 +48,9 @@ def main():
 
     args = parser.parse_args()
 
+    print("Starting ArgDB...")
+    argdb.init(args.config)
+    
     if args.gui:
         print("Launching ArgDB WebView GUI...")
         gui.launch(args)

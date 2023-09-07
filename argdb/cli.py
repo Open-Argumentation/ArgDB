@@ -17,11 +17,6 @@ def process(args):
         exit(1)
 
 
-    if args.config:
-        print("Starting ArgDB...\n")
-        argdb.init(args.config)
-
-
         """
         if args.add_datastore:
             print("Adding the following datastore: "+str(args.add_datastore))
@@ -53,6 +48,8 @@ def process(args):
 
             
     else:
-        print("You didn't supply a configuration file. If you don't have one then perhaps you might want to generate one? (Try  \"python -m argdb --generate\")")
+        print("Nothing to do.")
+        print("Cleaning up.")
+        print("Stopping ArgDB...")
    
 
