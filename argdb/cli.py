@@ -22,7 +22,7 @@ def process(args):
         argdb.init(args.config)
         print(argdb.info())
         print()
-
+        """
         if args.add_datastore:
             print("Adding the following datastore: "+str(args.add_datastore))
             argdb.add_datastore(args.add_datastore)
@@ -49,10 +49,10 @@ def process(args):
             elif args.get_document:
                 doc = argdb.get_doc(args.datastore, args.get_document)
                 print(sadface.prettyprint(doc))
-                
+       """  
 
             
     else:
-        print("You didn't supply a configuration file. If you don't have one then perhaps you want to generate one?")
+        print("You didn't supply a configuration file. If you don't have one then perhaps you might want to generate one? (Try  \"python -m argdb --generate\")")
    
 
