@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 import argparse
-#import sadface
 
 from . import argdb
 from . import config
