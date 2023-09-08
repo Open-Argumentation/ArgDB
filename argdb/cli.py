@@ -15,7 +15,6 @@ def process(args):
         config.generate_default()
         argdb.cleanup()
 
-
     if args.add_document:
         argdb.add_doc(args.add_document)
         argdb.cleanup()
