@@ -23,7 +23,7 @@ def add_doc(new_doc):
     """
 
     """
-    #TODO: Verify document
+    #TODO: Verify documen using SADFace lib
 
     cursor = db.cursor()
     cursor.execute("INSERT INTO raw (id, data) VALUES (NULL,json('"+new_doc+"') );")
