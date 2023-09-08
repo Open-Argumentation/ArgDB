@@ -22,6 +22,11 @@ def process(args):
         argdb.add_doc(args.add_document)
         argdb.cleanup()
 
+    if args.delete_document:
+        print("Deleting document from datastore...")
+        argdb.delete_doc(args.delete_document)
+        argdb.cleanup()
+
 
         """
         if args.add_datastore:

@@ -30,6 +30,15 @@ def add_doc(new_doc):
     db.commit()
 
 
+def delete_doc(docid):
+    """
+
+    """
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM raw WHERE id = "+docid)
+    db.commit()
+
+
 def init(config_pathname=None):
     """
     Initialises ArgDB. If a configuration file is supplied then that is used
