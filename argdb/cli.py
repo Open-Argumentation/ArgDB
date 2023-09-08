@@ -14,7 +14,13 @@ def process(args):
     if args.generate:
         print("Generating a configuration file for you...")
         config.generate_default()
-        exit(1)
+        argdb.cleanup()
+
+
+    if args.add_document:
+        print("Adding document to datastore...")
+        argdb.add_doc(args.add_document)
+        argdb.cleanup()
 
 
         """
@@ -45,11 +51,4 @@ def process(args):
                 doc = argdb.get_doc(args.datastore, args.get_document)
                 print(sadface.prettyprint(doc))
        """  
-
             
-    else:
-        print("Nothing to do.")
-        print("Cleaning up.")
-        print("Stopping ArgDB...")
-   
-
