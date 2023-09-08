@@ -33,6 +33,7 @@ def clear():
     """
     cursor = db.cursor()
     cursor.execute('DROP TABLE IF EXISTS raw')
+    init_db()
 
 
 def delete_doc(docid):
@@ -68,12 +69,25 @@ def init(config_pathname=None):
     otherwise a default configuration is generated and saved to the working
     directory in which ArgDB was initiated.
     """
+    init_config()
+    init_db()
+    
+
+def init_config(config_pathname=None):
+    """
+
+    """
     if config_pathname is None:
         config.generate_default()
         config_pathname = config.get_config_name()
 
     current_config = config.load(config_pathname)
-    
+
+
+def init_db():
+    """
+
+    """
     global db
     dbname = config.current.get('datastore', "name")
 
@@ -88,6 +102,4 @@ def init(config_pathname=None):
         ''')
 
     db.commit()
-
-
 
