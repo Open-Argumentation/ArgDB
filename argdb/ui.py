@@ -39,7 +39,9 @@ def main():
     parser.add_argument("--generate", help="Generate a default configuration file", action="store_true")
 
 
-    parser.add_argument("-a", "--add_document", help="Add the supplied SADface document to the current datastore")
+    parser.add_argument("-a", "--add_document", help="Add the supplied SADface document string to the current datastore")
+    parser.add_argument("-l", "--load_document", help="Add the supplied SADface document file to the current datastore")
+    
     parser.add_argument("-d", "--delete_document", help="Delete a SADFace document, identifed by its ID")
     parser.add_argument("-g", "--get_document", help="Retrive a SADFace document, identified by its ID")
     parser.add_argument("--tabula-rasa", help="Empty the datastore of all contents", action="store_true")

@@ -20,6 +20,12 @@ def process(args):
         argdb.add_doc(args.add_document)
         argdb.cleanup()
 
+    if args.load_document:
+        with open(args.load_document) as sadface_file:
+            sfdoc = json.dumps(json.load(sadface_file))
+            argdb.add_doc(sfdoc)
+            argdb.cleanup()
+
     if args.delete_document:
         argdb.delete_doc(args.delete_document)
         argdb.cleanup()

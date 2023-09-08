@@ -21,11 +21,12 @@ def add_doc(new_doc):
     """
 
     """
-    #TODO: Verify documen using SADFace lib
+    result = sf.validation.verify(new_doc)
+    if result[0] == True:
 
-    cursor = db.cursor()
-    cursor.execute("INSERT INTO raw (id, data) VALUES (NULL,json('"+new_doc+"') );")
-    db.commit()
+        cursor = db.cursor()
+        cursor.execute("INSERT INTO raw (id, data) VALUES (NULL,json('"+new_doc+"') );")
+        db.commit()
 
 def clear():
     """
