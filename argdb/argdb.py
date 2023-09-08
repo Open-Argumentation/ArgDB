@@ -22,10 +22,11 @@ def add_doc(new_doc):
 
     """
     result = sf.validation.verify(new_doc)
-    if result[0] == True:
 
+    if result[0] == True:
+        docid = sf.get_document_id(json.loads(new_doc))
         cursor = db.cursor()
-        cursor.execute("INSERT INTO raw (id, data) VALUES (NULL,json('"+new_doc+"') );")
+        cursor.execute("INSERT INTO raw (id, data) VALUES ('"+docid+"',json('"+new_doc+"') );")
         db.commit()
 
 def clear():
@@ -98,7 +99,7 @@ def init_db():
     
     cur.executescript('''
         CREATE TABLE IF NOT EXISTS raw (
-        id   INTEGER PRIMARY KEY,
+        id   TEXT PRIMARY KEY,
         data JSON);
         ''')
 
