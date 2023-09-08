@@ -39,6 +39,24 @@ def delete_doc(docid):
     db.commit()
 
 
+def get_doc(docid):
+    """
+
+    """
+    try:
+        cursor = db.cursor()
+        data = cursor.execute('SELECT data FROM raw WHERE id = '+docid)
+        data = cursor.fetchone()
+
+        if data is not None:
+            return data[0]
+            
+    except sqlite3.Error as error:
+        print("Failed to read data from table", error)
+
+    return None
+
+
 def init(config_pathname=None):
     """
     Initialises ArgDB. If a configuration file is supplied then that is used
