@@ -45,7 +45,6 @@ def main():
 
     args = parser.parse_args()
 
-    print("Starting ArgDB...")
     argdb.init(args.config)
     
     if args.gui:

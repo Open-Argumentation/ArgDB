@@ -13,9 +13,7 @@ def cleanup():
     """
 
     """
-    print("Cleaning up.")
     db.close()
-    print("Stopping ArgDB...")
     exit(1)
 
 
