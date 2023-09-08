@@ -29,4 +29,7 @@ def process(args):
         if doc is not None:
             print(doc)
         argdb.cleanup()
+
+    if args.tabula_rasa:
+        argdb.clear()
             

@@ -27,6 +27,13 @@ def add_doc(new_doc):
     cursor.execute("INSERT INTO raw (id, data) VALUES (NULL,json('"+new_doc+"') );")
     db.commit()
 
+def clear():
+    """
+
+    """
+    cursor = db.cursor()
+    cursor.execute('DROP TABLE IF EXISTS raw')
+
 
 def delete_doc(docid):
     """
