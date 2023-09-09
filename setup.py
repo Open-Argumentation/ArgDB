@@ -2,20 +2,20 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 
-with open('README.md') as f:
-    readme = f.read()
+with open('README.md', "r", encoding="utf-8") as f:
+    long_description = f.read()
 
-with open('LICENSE') as f:
-    license = f.read()
+exec(open('argdb/version.py').read())
 
 setup(
     name='argdb',
     description='ArgDB - A Datastore for arguments ',
-    long_description=readme,
+    long_description_content_type="text/markdown",
+    long_description=long_description,
     license=license,
     author='Simon Wells',
     url='https://github.com/Open-Argumentation/ArgDB',
     author_email='mail@simonwells.org',
-    version='0.1',
+    version=__version__,
     packages=find_packages(exclude=('deploy', 'etc', 'examples'))
 )
