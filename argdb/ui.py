@@ -3,6 +3,7 @@
 from . import argdb
 from . import gui
 from . import cli
+from . import version
 
 import argparse
 import cmd
