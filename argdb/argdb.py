@@ -43,7 +43,7 @@ def delete_doc(docid):
 
     """
     cursor = db.cursor()
-    cursor.execute("DELETE FROM raw WHERE id = "+docid)
+    cursor.execute("DELETE FROM raw WHERE id = '"+docid+"'")
     db.commit()
 
 
@@ -53,7 +53,7 @@ def get_doc(docid):
     """
     try:
         cursor = db.cursor()
-        data = cursor.execute('SELECT data FROM raw WHERE id = '+docid)
+        data = cursor.execute("SELECT data FROM raw WHERE id = '"+docid+"'")
         data = cursor.fetchone()
 
         if data is not None:
