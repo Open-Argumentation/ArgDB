@@ -17,5 +17,7 @@ setup(
     url='https://github.com/Open-Argumentation/ArgDB',
     author_email='mail@simonwells.org',
     version=__version__,
+    install_requires=['sadface', 'bottle', 'pywebview'],
+    setup_requires=['sadface', 'bottle', 'pywebview'],
     packages=find_packages(exclude=('deploy', 'etc', 'examples'))
 )
