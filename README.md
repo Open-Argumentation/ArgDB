@@ -7,17 +7,28 @@ ArgDB is a datastore, API, and suite of tools for working with argument data rep
 ## Usage
 
 
-Running the CLI REPL:
+Running the Command Line Interface (CLI):
 
 ~~~~
 $ python -m argdb
 ~~~~
+
+This doesn't actually do much as the CLI relies on passing in documents or queries and receiving back a result from the datastore. So use the help option to find out a bit more:
+
+~~~~
+$ python -m argdb -h
+~~~~
+
+Note that the CLI is designed to be used either in the terminal, either directly, or as part of command pipeline. For example, using SADFace, or some other tool to generate a SADFace document containing argumentative data, and then storing it in the ArgDB datastore.
+
 
 Running the (web) gui:
 
 ~~~~
 $ python -m argdb --gui
 ~~~~
+
+
 
 
 ## History
