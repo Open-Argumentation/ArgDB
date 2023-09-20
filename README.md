@@ -22,6 +22,14 @@ $ python -m argdb -h
 Note that the CLI is designed to be used either in the terminal, either directly, or as part of command pipeline. For example, using SADFace, or some other tool to generate a SADFace document containing argumentative data, and then storing it in the ArgDB datastore.
 
 
+Running the REPL environment:
+
+~~~~
+$ python -m argdb --gui
+~~~~
+
+This provides similar functionality to the CLI version, but instead of being optimised for scripted usage, this uses a dedicated, ArgDB read-evaluate-print-loop (REPL) environment within which you can work with your ArgDB datasets.
+
 Running the (web) GUI:
 
 ~~~~
@@ -37,9 +45,16 @@ Running the (web) API (experimental | development path):
 $ python -m argdb --api
 ~~~~
 
-This starts a JSON-RPC API on the port specified in your argdb.cfg file. This port defaults to 5000. The API is a fully functional WSGI web-app, so can be used to expose an ArgDB datastore publiclly to the wider world.
+This starts a JSON-RPC API on the port specified in your argdb.cfg file. This port defaults to 5000. The API is a fully functional WSGI web-app, so can be used to expose an ArgDB datastore publiclly to the wider world. This part of the experimental development path and unctionality is rudimentary at present.
 
 
+Running the (web) search GUI  (experimental | development path)
+
+~~~~
+$ python -m argdb --web
+~~~~
+
+This starts a dynamic WSGI web-app that presents the ArgDB search GUI in a manner suitable for deploying publicly. This part of the experimental development path and unctionality is rudimentary at present.
 
 
 
