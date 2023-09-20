@@ -28,6 +28,14 @@ Running the (web) gui:
 $ python -m argdb --gui
 ~~~~
 
+Running the (web) API:
+
+~~~~
+$ python -m argdb --api
+~~~~
+This starts a JSON-RPC API on the port specified in your argdb.cfg file. This port defaults to 5000. The API is a fully functional WSGI web-app, so can be used to expose an ArgDB datastore publiclly to the wider world.
+
+
 
 
 
