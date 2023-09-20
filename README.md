@@ -31,11 +31,12 @@ $ python -m argdb --gui
 This causes a PyWebView based GUI to be displayed. This uses the native browser of your system to display the interface and is a lightweight method to distribute a web-based tool, packaged for the deskop but without including an entire browser.
 
 
-Running the (web) API:
+Running the (web) API (experimental | development path):
 
 ~~~~
 $ python -m argdb --api
 ~~~~
+
 This starts a JSON-RPC API on the port specified in your argdb.cfg file. This port defaults to 5000. The API is a fully functional WSGI web-app, so can be used to expose an ArgDB datastore publiclly to the wider world.
 
 
