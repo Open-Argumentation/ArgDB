@@ -22,11 +22,14 @@ $ python -m argdb -h
 Note that the CLI is designed to be used either in the terminal, either directly, or as part of command pipeline. For example, using SADFace, or some other tool to generate a SADFace document containing argumentative data, and then storing it in the ArgDB datastore.
 
 
-Running the (web) gui:
+Running the (web) GUI:
 
 ~~~~
 $ python -m argdb --gui
 ~~~~
+
+This causes a PyWebView based GUI to be displayed. This uses the native browser of your system to display the interface and is a lightweight method to distribute a web-based tool, packaged for the deskop but without including an entire browser.
+
 
 Running the (web) API:
 
