@@ -50,21 +50,21 @@ $ python -m argdb -g "12345678-1234-5678-1234-567812345678"
 
 
 
-### Running the REPL environment:
+### Running the REPL environment (experimental | development path):
 
 ~~~~
 $ python -m argdb --gui
 ~~~~
 
-This provides similar functionality to the CLI version, but instead of being optimised for scripted usage, this uses a dedicated, ArgDB read-evaluate-print-loop (REPL) environment within which you can work with your ArgDB datasets.
+This provides similar functionality to the CLI version, but instead of being optimised for scripted usage, this uses a dedicated, ArgDB read-evaluate-print-loop (REPL) environment within which you can work with your ArgDB datasets. This is part of the experimental development path and functionality is rudimentary at present.
 
-### Running the (web) GUI:
+### Running the (web) GUI (experimental | development path):
 
 ~~~~
 $ python -m argdb --gui
 ~~~~
 
-This causes a PyWebView based GUI to be displayed. This uses the native browser of your system to display the interface and is a lightweight method to distribute a web-based tool, packaged for the deskop but without including an entire browser.
+This causes a PyWebView based GUI to be displayed. This uses the native browser of your system to display the interface and is a lightweight method to distribute a web-based tool, packaged for the deskop but without including an entire browser. This is part of the experimental development path and functionality is rudimentary at present.
 
 
 ### Running the (web) API (experimental | development path):
@@ -73,7 +73,7 @@ This causes a PyWebView based GUI to be displayed. This uses the native browser 
 $ python -m argdb --api
 ~~~~
 
-This starts a JSON-RPC API on the port specified in your argdb.cfg file. This port defaults to 5000. The API is a fully functional WSGI web-app, so can be used to expose an ArgDB datastore publiclly to the wider world. This part of the experimental development path and unctionality is rudimentary at present.
+This starts a JSON-RPC API on the port specified in your argdb.cfg file. This port defaults to 5000. The API is a fully functional WSGI web-app, so can be used to expose an ArgDB datastore publiclly to the wider world. This is part of the experimental development path and functionality is rudimentary at present.
 
 
 ### Running the (web) search GUI  (experimental | development path)
@@ -82,7 +82,7 @@ This starts a JSON-RPC API on the port specified in your argdb.cfg file. This po
 $ python -m argdb --web
 ~~~~
 
-This starts a dynamic WSGI web-app that presents the ArgDB search GUI in a manner suitable for deploying publicly. This part of the experimental development path and unctionality is rudimentary at present.
+This starts a dynamic WSGI web-app that presents the ArgDB search GUI in a manner suitable for deploying publicly. This is part of the experimental development path and functionality is rudimentary at present.
 
 
 
