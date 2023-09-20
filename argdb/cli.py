@@ -35,6 +35,9 @@ def process(args):
             print(doc)
         argdb.cleanup()
 
+    if args.alldocs:
+        print(argdb.get_docs())
+
     if args.tabula_rasa:
         argdb.clear()
             

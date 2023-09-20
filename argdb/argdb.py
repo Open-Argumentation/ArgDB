@@ -28,6 +28,8 @@ def add_doc(new_doc):
         cursor = db.cursor()
         cursor.execute("INSERT INTO raw (id, data) VALUES ('"+docid+"',json('"+new_doc+"') );")
         db.commit()
+    else:
+        print("Couldn't add document to DB")
 
 def clear():
     """
@@ -64,6 +66,26 @@ def get_doc(docid):
 
     return None
 
+
+def get_docs():
+    """
+
+    """
+    try:
+        cursor = db.cursor()
+        data = cursor.execute("SELECT id FROM raw")
+        data = cursor.fetchall()
+
+        if data is not None:
+            docs = []
+            for row in data:
+                docs.append(row[0])
+            return docs
+            
+    except sqlite3.Error as error:
+        print("Failed to read data from table", error)
+
+    return []
 
 def init(config_pathname=None):
     """

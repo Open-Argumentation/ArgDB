@@ -45,6 +45,7 @@ def main():
     
     parser.add_argument("-d", "--delete_document", help="Delete a SADFace document, identifed by its ID")
     parser.add_argument("-g", "--get_document", help="Retrive a SADFace document, identified by its ID")
+    parser.add_argument("--alldocs", help="Retrieve a list of all stored SADFace document IDs", action="store_true")
     parser.add_argument("--tabula-rasa", help="Empty the datastore of all contents", action="store_true")
 
     args = parser.parse_args()
