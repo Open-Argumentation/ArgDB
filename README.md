@@ -21,6 +21,34 @@ $ python -m argdb -h
 
 Note that the CLI is designed to be used either in the terminal, either directly, or as part of command pipeline. For example, using SADFace, or some other tool to generate a SADFace document containing argumentative data, and then storing it in the ArgDB datastore.
 
+The core functionality for a datastore are the so-called CRUD operations, Create, Retrieve, Update, and Delete. These are at the core of ArgDB's functionality. Let's explore them:
+
+You can add a document to an ArgDB datastore in two ways, by supplying it as a string using the add function or by loading in a document from a file. We'll look at each in turn. Assuming you have a well formed SADFace document to hand then the following should work to add a SADFace document to your ArgDB datastore (Note that the supplied JSON in the example isn't a valid document and would actually be rejected):
+
+~~~~
+$ python -m argdb -a '{"valid":"SADFace","demo":"document"}'
+~~~~
+
+Under normal circumstances though, this usage would be via a scripted interaction rather than a human command line interaction. The other way is to take a SADFace document stored in a file, that, for example, might have been exported from the MonkeyPuzzle tool, and load it into SADFace:
+
+~~~~
+$ python -m argdb -l FILEPATH-TO-SADFACE-DOCUMENT
+~~~~
+
+Once you have a document stored in the ArgDB you can then delete it by supplying the SADFace UUID for the target document as follows:
+
+~~~~
+$ python -m argdb -d "12345678-1234-5678-1234-567812345678"
+~~~~
+
+To retrieve a document, once added to the ArgDB, supply it's UUID
+
+~~~~
+$ python -m argdb -g "12345678-1234-5678-1234-567812345678"
+~~~~
+
+
+
 
 ### Running the REPL environment:
 
