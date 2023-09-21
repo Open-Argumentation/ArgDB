@@ -95,6 +95,6 @@ This starts a dynamic WSGI web-app that presents the ArgDB search GUI in a manne
 
 ## History
 
-Prior to version 0.1, ArgDB used CouchDB as the default backend. However, recent advances in support JSON within SQLite3 meant that a simpler implementation could be produced that could use a single backend to store raw SADFace documents, as well as a relational subset of SADFace that could be optimised for scalability and ad hoc search.
+Prior to version 0.1, ArgDB used CouchDB as the default backend. However, recent advances in support for JSON within SQLite3 meant that a simpler implementation could be produced that could use a single backend to store raw SADFace documents, as well as a relational subset of SADFace that could be optimised for scalability and ad hoc search.
 
 
