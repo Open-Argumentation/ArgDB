@@ -24,12 +24,15 @@ def add_doc(new_doc):
     result = sf.validation.verify(new_doc)
 
     if result[0] == True:
-        docid = sf.get_document_id(json.loads(new_doc))
-        cursor = db.cursor()
-        cursor.execute("INSERT INTO raw (id, data) VALUES ('"+docid+"',json('"+new_doc+"') );")
-        db.commit()
+        try:
+            docid = sf.get_document_id(json.loads(new_doc))
+            cursor = db.cursor()
+            cursor.execute("INSERT INTO raw (id, data) VALUES ('"+docid+"',json('"+new_doc+"') );")
+            db.commit()
+        except sqlite3.IntegrityError as error:
+            print("Couldn't add your SADFace document to ArgDB due to the following:", error)
     else:
-        print("Couldn't add document to DB")
+        print("Couldn't add document to DB as it failed SADFace validation due to the following:",result[1])
 
 def clear():
     """
