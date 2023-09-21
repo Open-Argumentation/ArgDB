@@ -17,20 +17,32 @@ def cleanup():
     exit(1)
 
 
-def add_doc(new_doc):
+def add_doc(new_doc, overwrite=False):
     """
+    Add a validated SADFace document to the datastore. If overwrite is True then overwrite an existing document,
+    otherwise disallow duplicates. A duplicate is considered to be so under the minimal constraint of: a document 
+    that has the same id in metatdata>core. SADFace document validation is entirely handled by the SADFace library.
 
     """
     result = sf.validation.verify(new_doc)
 
     if result[0] == True:
-        try:
-            docid = sf.get_document_id(json.loads(new_doc))
-            cursor = db.cursor()
-            cursor.execute("INSERT INTO raw (id, data) VALUES ('"+docid+"',json('"+new_doc+"') );")
-            db.commit()
-        except sqlite3.IntegrityError as error:
-            print("Couldn't add your SADFace document to ArgDB due to the following:", error)
+        if overwrite:
+            try:
+                docid = sf.get_document_id(json.loads(new_doc))
+                cursor = db.cursor()
+                cursor.execute("UPDATE raw SET data = json('"+new_doc+"') where id = '"+docid+"'")
+                db.commit()
+            except sqlite3.IntegrityError as error:
+                print("Couldn't add your SADFace document to ArgDB due to the following:", error)
+        else:
+            try:
+                docid = sf.get_document_id(json.loads(new_doc))
+                cursor = db.cursor()
+                cursor.execute("INSERT INTO raw (id, data) VALUES ('"+docid+"',json('"+new_doc+"') );")
+                db.commit()
+            except sqlite3.IntegrityError as error:
+                print("Couldn't add your SADFace document to ArgDB due to the following:", error)
     else:
         print("Couldn't add document to DB as it failed SADFace validation due to the following:",result[1])
 
