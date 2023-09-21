@@ -33,7 +33,7 @@ def add_doc(new_doc, overwrite=False):
                 cursor = db.cursor()
                 cursor.execute("UPDATE raw SET data = json('"+new_doc+"') where id = '"+docid+"'")
                 db.commit()
-            except sqlite3.IntegrityError as error:
+            except sqlite3.Error as error:
                 print("Couldn't add your SADFace document to ArgDB due to the following:", error)
         else:
             try:

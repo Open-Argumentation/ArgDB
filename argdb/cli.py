@@ -24,6 +24,13 @@ def process(args):
             sfdoc = json.dumps(json.load(sadface_file))
             argdb.add_doc(sfdoc)
             argdb.cleanup()
+            
+    if args.overwrite:
+        with open(args.overwrite) as sadface_file:
+            sfdoc = json.dumps(json.load(sadface_file))
+            argdb.add_doc(sfdoc, True)
+            argdb.cleanup()
+
 
     if args.delete_document:
         argdb.delete_doc(args.delete_document)
