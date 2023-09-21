@@ -35,6 +35,13 @@ Under normal circumstances though, this usage would be via a scripted interactio
 $ python -m argdb -l FILEPATH-TO-SADFACE-DOCUMENT
 ~~~~
 
+The load feature won't allow you to add a document whose ID matches an existing document in ArgDB. If you do want to do this, then the overwrite feature let's you replace an existing SADFace document with a new one like so:
+
+~~~~
+$ python -m argdb -o FILEPATH-TO-SADFACE-DOCUMENT
+~~~~
+
+
 Once you have a document stored in the ArgDB you can then delete it by supplying the SADFace UUID for the target document as follows:
 
 ~~~~
