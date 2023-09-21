@@ -32,28 +32,33 @@ $ python -m argdb -a '{"valid":"SADFace","demo":"document"}'
 Under normal circumstances though, this usage would be via a scripted interaction rather than a human command line interaction. The other way is to take a SADFace document stored in a file, that, for example, might have been exported from the MonkeyPuzzle tool, and load it into SADFace:
 
 ~~~~
-$ python -m argdb -l FILEPATH-TO-SADFACE-DOCUMENT
+$ python -m argdb -l FILEPATH-TO-SADFACE-DOCUMENT 
 ~~~~
 
-The load feature won't allow you to add a document whose ID matches an existing document in ArgDB. If you do want to do this, then the overwrite feature let's you replace an existing SADFace document with a new one like so:
+the load feature won't allow you to add a document whose id matches an existing document in argdb. if you do want to do this, then the overwrite feature let's you replace an existing sadface document with a new one like so:
 
 ~~~~
-$ python -m argdb -o FILEPATH-TO-SADFACE-DOCUMENT
+$ python -m argdb -o filepath-to-sadface-document
 ~~~~
 
 
-Once you have a document stored in the ArgDB you can then delete it by supplying the SADFace UUID for the target document as follows:
+once you have a document stored in the argdb you can then delete it by supplying the sadface uuid for the target document as follows:
 
 ~~~~
 $ python -m argdb -d "12345678-1234-5678-1234-567812345678"
 ~~~~
 
-To retrieve a document, once added to the ArgDB, supply it's UUID
+to retrieve a document, once added to the argdb, supply it's uuid
 
 ~~~~
 $ python -m argdb -g "12345678-1234-5678-1234-567812345678"
 ~~~~
 
+if you need to get rid of everything and start again, you can just delete the database file manually. There's also a built in mechanism to just remove all the data and provision a new empty database, like so:
+
+~~~~
+$ python -m argdb --tabula-rasa
+~~~~
 
 
 
